@@ -194,7 +194,7 @@ void actionPopUpItemSelected(String value, String id) {
   if (value == 'visualizar') {
     print('VISUALIZAR EVENTO');
   } else if (value == 'deletar') {
-    print('Você selecionou DELETAR');
+    print('Você selecionou DELETARaaa');
     // final currentUser = FirebaseAuth.instance.currentUser;
 
     // CollectionReference usuarios =
