@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "175830706009",
+    "project_id": "uesbvent-eng1",
+    "storage_bucket": "uesbvent-eng1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:175830706009:android:d950709dfe613cc99d0e48",
+        "android_client_info": {
+          "package_name": "com.example.uesbvent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "175830706009-t60ffd3f30p2j8gto13fp93lbffu27fu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDd8EP0n8qglN6PbfmFiMwn5PRuEPC2bWM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "175830706009-t60ffd3f30p2j8gto13fp93lbffu27fu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
