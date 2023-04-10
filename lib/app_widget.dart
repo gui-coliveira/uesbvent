@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:uesbvent/models/home_page.dart';
+
 import 'package:uesbvent/models/login_page.dart';
+import 'package:uesbvent/models/master_2_page.dart';
 import 'package:uesbvent/models/organizador_page.dart';
 
+import 'models/inscricaoEvento_page.dart';
 import 'models/membros_page.dart';
 
 class AppWidget extends StatelessWidget {
@@ -16,7 +19,7 @@ class AppWidget extends StatelessWidget {
         brightness: Brightness.light,
       ),
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: InscricaoEventoPage(),
     );
   }
 }
