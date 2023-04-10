@@ -4,11 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uesbvent/models/codSeguranca_page.dart';
-
-import 'package:uesbvent/models/evento_page.dart';
 import 'package:uesbvent/models/login_page.dart';
 import 'package:uesbvent/models/recover_page.dart';
-import 'package:uesbvent/models/usuario.dart';
 import 'package:uesbvent/models/validarcertificado_page.dart';
 import '../models/evento.dart';
 
@@ -128,15 +125,6 @@ class _HomePageState extends State<HomePage> {
                     builder: (context) => CodSegurancaPage()));
               },
             ),
-            // ListTile(
-            //   leading: Icon(Icons.bolt_rounded),
-            //   title: Text("TESTE"),
-            //   onTap: () {
-            //     // final User user = auth.currentUser as User;
-
-            //     print(currentUser?.email);
-            //   },
-            // ),
           ],
         ),
       ),

@@ -1,6 +1,7 @@
+// ignore_for_file: file_names
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
 import 'codSeguranca_page.dart';
 import 'login_page.dart';
 import 'recover_page.dart';
@@ -20,9 +21,9 @@ class _InscricaoEventoPageState extends State<InscricaoEventoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 227, 30, 37),
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 57, 50, 133),
+        backgroundColor: Colors.indigo,
         centerTitle: true,
         title: SizedBox(
           height: 48.0,
@@ -112,15 +113,6 @@ class _InscricaoEventoPageState extends State<InscricaoEventoPage> {
                     builder: (context) => CodSegurancaPage()));
               },
             ),
-            // ListTile(
-            //   leading: Icon(Icons.bolt_rounded),
-            //   title: Text("TESTE"),
-            //   onTap: () {
-            //     // final User user = auth.currentUser as User;
-
-            //     print(currentUser?.email);
-            //   },
-            // ),
           ],
         ),
       ),
