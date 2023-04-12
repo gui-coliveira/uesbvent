@@ -8,6 +8,7 @@ import 'package:uesbvent/models/login_page.dart';
 import 'package:uesbvent/models/recover_page.dart';
 import 'package:uesbvent/models/validarcertificado_page.dart';
 import '../models/evento.dart';
+import 'evento_page.dart';
 
 // ignore: must_be_immutable
 class HomePage extends StatefulWidget {
@@ -128,65 +129,81 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
       ),
-      body: FutureBuilder<List<Evento>>(
-        future: readEventos().first,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final eventos = snapshot.data!;
-
-            return ListView(
-              children: eventos.map(buildEvento).toList(),
-            );
-          } else {
-            return Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
+      body: buildEventList(),
     );
   }
-}
 
-Future<void> signOut() async {
-  print('Sign Out');
-  await FirebaseAuth.instance.signOut();
-}
+  Future<void> signOut() async {
+    print('Sign Out');
+    await FirebaseAuth.instance.signOut();
+  }
 
-Stream<List<Evento>> readEventos() => FirebaseFirestore.instance
-    .collection('eventos')
-    .snapshots()
-    .map((snapshot) =>
-        snapshot.docs.map((doc) => Evento.fromJson(doc.data())).toList());
-
-Widget buildEvento(Evento evento) => ListTile(
-      //leading: CircleAvatar(child: Icon(Icons.person)),
-      title: Text(evento.title),
-      subtitle: Text(evento.descricao),
-      onTap: () {
-        print('Selecionou ' + evento.title);
+  Widget buildEventList() {
+    return FutureBuilder<List<Evento>>(
+      future: readEventos().first,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final eventos = snapshot.data!;
+          return ListView(
+            children: eventos.map(buildEvento).toList(),
+          );
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
       },
-      trailing: PopupMenuButton(
-        itemBuilder: (context) {
-          return [
-            PopupMenuItem(
-              value: 'visualizar',
-              child: Text('Visualizar'),
-            ),
-            PopupMenuItem(
-              value: 'inscreverse',
-              child: Text('Inscrever-se'),
-            ),
-          ];
-        },
-        onSelected: (String value) => actionPopUpItemSelected(value, evento.id),
-      ),
     );
+  }
 
-void actionPopUpItemSelected(String value, String id) {
-  if (value == 'visualizar') {
-    print('VISUALIZAR EVENTO');
-  } else if (value == 'inscreverse') {
-    print('INSCREVER NO EVENTO');
-  } else {
-    print('Not implemented');
+  Stream<List<Evento>> readEventos() => FirebaseFirestore.instance
+      .collection('eventos')
+      .snapshots()
+      .map((snapshot) =>
+          snapshot.docs.map((doc) => Evento.fromJson(doc.data())).toList());
+
+  Widget buildEvento(Evento evento) => ListTile(
+        //leading: CircleAvatar(child: Icon(Icons.person)),
+        title: Text(
+          evento.title,
+          maxLines: 1,
+        ),
+        subtitle: Text(
+          evento.descricao,
+          maxLines: 2,
+          textAlign: TextAlign.justify,
+          overflow: TextOverflow.ellipsis,
+        ),
+        onTap: () {
+          print('Selecionou ' + evento.title);
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => EventoPage(evento)));
+        },
+        trailing: PopupMenuButton(
+          itemBuilder: (context) {
+            return [
+              PopupMenuItem(
+                value: 'visualizar',
+                child: Text('Visualizar'),
+              ),
+            ];
+          },
+          onSelected: (String value) {
+            actionPopUpItemSelected(value, evento);
+          },
+        ),
+      );
+
+  void actionPopUpItemSelected(String value, Evento evento) {
+    if (value == 'visualizar') {
+      print('VISUALIZAR EVENTO');
+      print(evento.title);
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => EventoPage(evento)));
+      //---------------------
+      //---------------------
+    } else {
+      print('Not implemented');
+      //---------------------
+      //---------------------
+    }
   }
 }

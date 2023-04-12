@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uesbvent/models/criarEvento_page.dart';
+import 'package:uesbvent/models/evento_page.dart';
 import 'package:uesbvent/models/login_page.dart';
 import 'package:uesbvent/models/membros_page.dart';
 import 'package:uesbvent/models/notificacao_page.dart';
@@ -168,10 +169,20 @@ class _OrganizadorPageState extends State<OrganizadorPage> {
 
   Widget buildEvento(Evento evento) => ListTile(
         //leading: CircleAvatar(child: Icon(Icons.person)),
-        title: Text(evento.title),
-        subtitle: Text(evento.descricao),
+        title: Text(
+          evento.title,
+          maxLines: 1,
+        ),
+        subtitle: Text(
+          evento.descricao,
+          maxLines: 2,
+          textAlign: TextAlign.justify,
+          overflow: TextOverflow.ellipsis,
+        ),
         onTap: () {
           print('Selecionou ' + evento.title);
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => EventoPage(evento)));
         },
         trailing: PopupMenuButton(
           itemBuilder: (context) {
@@ -191,19 +202,28 @@ class _OrganizadorPageState extends State<OrganizadorPage> {
             ];
           },
           onSelected: (String value) {
-            actionPopUpItemSelected(value, evento.id);
+            actionPopUpItemSelected(value, evento);
           },
         ),
       );
 
-  void actionPopUpItemSelected(String value, String id) {
+  void actionPopUpItemSelected(String value, Evento evento) {
     if (value == 'visualizar') {
       print('VISUALIZAR EVENTO');
+      print(evento.title);
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => EventoPage(evento)));
+      //---------------------
+      //---------------------
     } else if (value == 'deletar') {
-      deleteEvent(id);
+      deleteEvent(evento.id);
       setState(() {});
+      //---------------------
+      //---------------------
     } else {
       print('Not implemented');
+      //---------------------
+      //---------------------
     }
   }
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uesbvent/models/home_page.dart';
+import 'package:uesbvent/models/login_page.dart';
 
 class AppWidget extends StatelessWidget {
   const AppWidget({super.key});
@@ -12,7 +12,7 @@ class AppWidget extends StatelessWidget {
         brightness: Brightness.light,
       ),
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: LoginPage(),
     );
   }
 }
