@@ -5,12 +5,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:uesbvent/models/criarEvento_page.dart';
 import 'package:uesbvent/models/login_page.dart';
 import 'package:uesbvent/models/membros_page.dart';
 import 'package:uesbvent/models/notificacao_page.dart';
 import 'package:uesbvent/models/presenca_page.dart';
 import '../models/evento.dart';
-import 'criar_evento_page.dart';
+import 'OLDcriaeventopage.dart';
 
 // ignore: must_be_immutable
 class OrganizadorPage extends StatefulWidget {
@@ -94,8 +95,8 @@ class _OrganizadorPageState extends State<OrganizadorPage> {
               title: Text("Criar Evento"),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => CriarEventoPage()));
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => CriarEvento_Page()));
                 //Navegar para outra página
               },
             ),
@@ -133,107 +134,86 @@ class _OrganizadorPageState extends State<OrganizadorPage> {
       body: Stack(
         children: <Widget>[
           buildEventList(), //Lista de Eventos
-          Column(
-            //Botão Atualizar
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SizedBox(height: 540),
-              TextButton(
-                child: Icon(
-                  Icons.refresh_rounded,
-                  size: 30,
-                ),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: Colors.black,
-                  minimumSize: Size(50.0, 50.0),
-                ),
-                onPressed: () {
-                  setState(() {});
-                },
-              ),
-            ],
-          ),
         ],
       ),
     );
   }
-}
 
-Future<void> signOut() async {
-  print('Sign Out');
-  await FirebaseAuth.instance.signOut();
-}
-
-Widget buildEventList() {
-  return FutureBuilder<List<Evento>>(
-    future: readEventos().first,
-    builder: (context, snapshot) {
-      if (snapshot.hasData) {
-        final eventos = snapshot.data!;
-        return ListView(
-          children: eventos.map(buildEvento).toList(),
-        );
-      } else {
-        return Center(child: CircularProgressIndicator());
-      }
-    },
-  );
-}
-
-Stream<List<Evento>> readEventos() => FirebaseFirestore.instance
-    .collection('eventos')
-    .snapshots()
-    .map((snapshot) =>
-        snapshot.docs.map((doc) => Evento.fromJson(doc.data())).toList());
-
-Widget buildEvento(Evento evento) => ListTile(
-      //leading: CircleAvatar(child: Icon(Icons.person)),
-      title: Text(evento.title),
-      subtitle: Text(evento.descricao),
-      onTap: () {
-        print('Selecionou ' + evento.title);
-      },
-      trailing: PopupMenuButton(
-        itemBuilder: (context) {
-          return [
-            PopupMenuItem(
-              value: 'visualizar',
-              child: Text('Visualizar'),
-            ),
-            PopupMenuItem(
-              value: 'editar',
-              child: Text('Editar'),
-            ),
-            PopupMenuItem(
-              value: 'deletar',
-              child: Text('Deletar'),
-            ),
-          ];
-        },
-        onSelected: (String value) {
-          actionPopUpItemSelected(value, evento.id);
-        },
-      ),
-    );
-
-void actionPopUpItemSelected(String value, String id) {
-  if (value == 'visualizar') {
-    print('VISUALIZAR EVENTO');
-  } else if (value == 'deletar') {
-    print('Você selecionou DELETAR');
-    deleteEvent(id);
-  } else {
-    print('Not implemented');
+  Future<void> signOut() async {
+    print('Sign Out');
+    await FirebaseAuth.instance.signOut();
   }
-}
 
-Future<void> deleteEvent(String id) {
-  final eventos = FirebaseFirestore.instance.collection('eventos');
+  Widget buildEventList() {
+    return FutureBuilder<List<Evento>>(
+      future: readEventos().first,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final eventos = snapshot.data!;
+          return ListView(
+            children: eventos.map(buildEvento).toList(),
+          );
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
+    );
+  }
 
-  return eventos
-      .doc(id)
-      .delete()
-      .then((_) => print('Deleted'))
-      .catchError((error) => print('Delete failed: $error'));
+  Stream<List<Evento>> readEventos() => FirebaseFirestore.instance
+      .collection('eventos')
+      .snapshots()
+      .map((snapshot) =>
+          snapshot.docs.map((doc) => Evento.fromJson(doc.data())).toList());
+
+  Widget buildEvento(Evento evento) => ListTile(
+        //leading: CircleAvatar(child: Icon(Icons.person)),
+        title: Text(evento.title),
+        subtitle: Text(evento.descricao),
+        onTap: () {
+          print('Selecionou ' + evento.title);
+        },
+        trailing: PopupMenuButton(
+          itemBuilder: (context) {
+            return [
+              PopupMenuItem(
+                value: 'visualizar',
+                child: Text('Visualizar'),
+              ),
+              PopupMenuItem(
+                value: 'editar',
+                child: Text('Editar'),
+              ),
+              PopupMenuItem(
+                value: 'deletar',
+                child: Text('Deletar'),
+              ),
+            ];
+          },
+          onSelected: (String value) {
+            actionPopUpItemSelected(value, evento.id);
+          },
+        ),
+      );
+
+  void actionPopUpItemSelected(String value, String id) {
+    if (value == 'visualizar') {
+      print('VISUALIZAR EVENTO');
+    } else if (value == 'deletar') {
+      deleteEvent(id);
+      setState(() {});
+    } else {
+      print('Not implemented');
+    }
+  }
+
+  Future<void> deleteEvent(String id) {
+    final eventos = FirebaseFirestore.instance.collection('eventos');
+
+    return eventos
+        .doc(id)
+        .delete()
+        .then((_) => print('Deletado'))
+        .catchError((error) => print('Delete failed: $error'));
+  }
 }
