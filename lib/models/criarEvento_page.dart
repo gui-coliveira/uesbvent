@@ -1,10 +1,16 @@
 // ignore: file_names
+// ignore_for_file: sized_box_for_whitespace, sort_child_properties_last, prefer_const_constructors, prefer_const_literals_to_create_immutables, camel_case_types
+
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:uesbvent/models/evento.dart';
+import 'package:uesbvent/models/organizador_page.dart';
 
-import 'master_2_page.dart';
+import 'package:uesbvent/models/login_page.dart';
 
 class CriarEvento_Page extends StatefulWidget {
   const CriarEvento_Page({super.key});
@@ -14,37 +20,42 @@ class CriarEvento_Page extends StatefulWidget {
 }
 
 class _CriarEvento_PageState extends State<CriarEvento_Page> {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final currentUser = FirebaseAuth.instance.currentUser;
+
+  final controllerTitle = TextEditingController();
+  final controllerDescricao = TextEditingController();
+  final controllerCurso = TextEditingController();
   XFile? imagem;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 211, 173, 2),
+      backgroundColor: Colors.indigo,
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 57, 50, 133),
-        leading: IconButton(
-          icon: const Icon(Icons.account_circle),
-          iconSize: 40,
-          onPressed: () {},
-        ),
+        backgroundColor: Colors.deepOrangeAccent,
         centerTitle: true,
         title: SizedBox(
           height: 48.0,
-          child: Image.asset('assets/logo_uesb.png'),
+          child: Image.asset('assets/logo_universidade.png'),
         ),
         actions: <Widget>[
           TextButton(
+            child: currentUser?.email != null ? Text('Sair') : Text('Login'),
             style: TextButton.styleFrom(
               foregroundColor: Colors.white,
-              padding: const EdgeInsets.all(5.0),
-              textStyle: const TextStyle(fontSize: 15),
             ),
-            child: const Text('Voltar'),
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const Master_2_Page()));
+              if (currentUser?.email != null) {
+                signOut();
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => LoginPage()));
+              } else {
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => LoginPage()));
+              }
             },
-          )
+          ),
         ],
       ),
       body: Container(
@@ -58,7 +69,7 @@ class _CriarEvento_PageState extends State<CriarEvento_Page> {
               alignment: Alignment.center,
               child: const Text(
                 'Novo Evento',
-                style: TextStyle(color: Colors.black, fontSize: 20),
+                style: TextStyle(color: Colors.white, fontSize: 20),
               ),
             ),
             const SizedBox(
@@ -85,7 +96,7 @@ class _CriarEvento_PageState extends State<CriarEvento_Page> {
               child: TextButton(
                 style: ButtonStyle(
                   foregroundColor:
-                      MaterialStateProperty.all<Color>(Colors.blue),
+                      MaterialStateProperty.all<Color>(Colors.orangeAccent),
                 ),
                 onPressed: () async {
                   final ImagePicker picker = ImagePicker();
@@ -99,7 +110,7 @@ class _CriarEvento_PageState extends State<CriarEvento_Page> {
                     debugPrint(e.toString());
                   }
                 },
-                child: const Text('Add Imagem'),
+                child: const Text('Adicionar Imagem'),
               ),
             ),
             const SizedBox(
@@ -108,11 +119,12 @@ class _CriarEvento_PageState extends State<CriarEvento_Page> {
 
             // CAMPOS DE TEXTO ------------------------------------------------
             TextFormField(
+              controller: controllerTitle,
               keyboardType: TextInputType.text,
               decoration: const InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
-                labelText: "Nome",
+                labelText: "Título do Evento",
                 labelStyle: TextStyle(
                   color: Color.fromARGB(255, 104, 104, 104),
                   fontWeight: FontWeight.w400,
@@ -124,12 +136,12 @@ class _CriarEvento_PageState extends State<CriarEvento_Page> {
                 color: Colors.black,
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
 
-            // CURSO --------------------------------------------
+            SizedBox(height: 10),
+
+            // Curso --------------------------------------------
             TextFormField(
+              controller: controllerCurso,
               keyboardType: TextInputType.text,
               decoration: const InputDecoration(
                 filled: true,
@@ -146,12 +158,12 @@ class _CriarEvento_PageState extends State<CriarEvento_Page> {
                 color: Colors.black,
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
+
+            SizedBox(height: 10),
 
             // Descrição ----------------------------------------------------
             TextFormField(
+              controller: controllerDescricao,
               keyboardType: TextInputType.multiline,
               decoration: const InputDecoration(
                 filled: true,
@@ -169,9 +181,8 @@ class _CriarEvento_PageState extends State<CriarEvento_Page> {
                 color: Colors.black,
               ),
             ),
-            const SizedBox(
-              height: 30,
-            ),
+
+            SizedBox(height: 30),
 
             // BOTÃO CANCELAR -------------------------------------------
             Row(
@@ -186,7 +197,7 @@ class _CriarEvento_PageState extends State<CriarEvento_Page> {
                   ),
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const Master_2_Page()));
+                        builder: (context) => const OrganizadorPage()));
                   },
                   child: const Text(
                     'Cancelar',
@@ -199,18 +210,49 @@ class _CriarEvento_PageState extends State<CriarEvento_Page> {
                 //BOTÃO CRIAR EVENTO -------------------------------------
                 OutlinedButton(
                   style: OutlinedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(255, 57, 50, 133),
+                    backgroundColor: Colors.redAccent,
                     foregroundColor: Colors.white,
                     minimumSize: const Size(170.0, 50.0),
                     maximumSize: const Size(170.0, 50.0),
                   ),
-                  onPressed: () {},
                   child: const Text(
                     'Criar Evento',
                     style: TextStyle(
                       fontSize: 18,
                     ),
                   ),
+                  onPressed: () {
+                    if (controllerTitle.text.isNotEmpty &&
+                        controllerDescricao.text.isNotEmpty) {
+                      final evento = Evento(
+                        title: controllerTitle.text,
+                        descricao: controllerDescricao.text,
+                        //curso: controllerCurso.text,
+                      );
+
+                      criarEvento(evento);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.warning_outlined,
+                                color: Colors.white,
+                                size: 30.0,
+                              ),
+                              Text('   '),
+                              Text('Preencha todos os campos obrigatórios!'),
+                            ],
+                          ),
+                          height: 60.0,
+                        ),
+                        behavior: SnackBarBehavior.fixed,
+                        backgroundColor: Colors.red,
+                      ));
+                    }
+                  },
                 ),
               ],
             ),
@@ -222,5 +264,74 @@ class _CriarEvento_PageState extends State<CriarEvento_Page> {
         ),
       ),
     );
+  }
+
+  Future criarEvento(Evento evento) async {
+    try {
+      final docUser = FirebaseFirestore.instance.collection('eventos').doc();
+
+      evento.id = docUser.id;
+
+      final json = evento.toJson();
+      await docUser.set(json);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(
+                  Icons.check_circle_outline_rounded,
+                  color: Colors.white,
+                  size: 30.0,
+                ),
+                Text('   '),
+                Text('Evento criado com sucesso!'),
+              ],
+            ),
+            height: 60.0,
+          ),
+          behavior: SnackBarBehavior.fixed,
+          backgroundColor: Colors.green,
+        ),
+      );
+
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => OrganizadorPage()));
+
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => OrganizadorPage()),
+          (route) => false);
+      //----------------
+    } on FirebaseAuthException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(
+                  Icons.warning_amber_rounded,
+                  color: Colors.white,
+                  size: 30.0,
+                ),
+                Text('   '),
+                Text('Dados inválidos!'),
+              ],
+            ),
+            height: 60.0,
+          ),
+          behavior: SnackBarBehavior.fixed,
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+  Future<void> signOut() async {
+    print('Sign Out');
+    await FirebaseAuth.instance.signOut();
   }
 }
