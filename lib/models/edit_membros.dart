@@ -56,123 +56,126 @@ class _EditMembrosState extends State<EditMembros> {
       );
     }
   }
-}
 
-Stream<List<Usuario>> readUsuarios() => FirebaseFirestore.instance
-    .collection('usuarios')
-    .where('org', isEqualTo: 'n')
-    .snapshots()
-    .map((snapshot) =>
-        snapshot.docs.map((doc) => Usuario.fromJson(doc.data())).toList());
+  Stream<List<Usuario>> readUsuarios() => FirebaseFirestore.instance
+      .collection('usuarios')
+      .where('org', isEqualTo: 'n')
+      .snapshots()
+      .map((snapshot) =>
+          snapshot.docs.map((doc) => Usuario.fromJson(doc.data())).toList());
 
-Stream<List<Usuario>> readOrganizadores() => FirebaseFirestore.instance
-    .collection('usuarios')
-    .where('org', isEqualTo: 's')
-    .snapshots()
-    .map((snapshot) =>
-        snapshot.docs.map((doc) => Usuario.fromJson(doc.data())).toList());
+  Stream<List<Usuario>> readOrganizadores() => FirebaseFirestore.instance
+      .collection('usuarios')
+      .where('org', isEqualTo: 's')
+      .snapshots()
+      .map((snapshot) =>
+          snapshot.docs.map((doc) => Usuario.fromJson(doc.data())).toList());
 
-Widget buildUsuario(Usuario usuario) => ListTile(
-      leading: CircleAvatar(child: Text('${usuario.nome[0]}')),
-      title: Text(usuario.nome),
-      subtitle: Text(usuario.email),
-      trailing: PopupMenuButton(
-        itemBuilder: (context) {
-          return [
-            PopupMenuItem(
-              value: 'editar',
-              child: Text('Editar'),
-            ),
-            PopupMenuItem(
-              value: 'deletar',
-              child: Text('Deletar'),
-            ),
-            PopupMenuItem(
-              value: 'promover',
-              child: Text('Promover a Organizador'),
-            )
-          ];
-        },
-        onSelected: (String value) =>
-            actionPopUpItemSelected(value, usuario.id),
-      ),
-    );
+  Widget buildUsuario(Usuario usuario) => ListTile(
+        leading: CircleAvatar(child: Text('${usuario.nome[0]}')),
+        title: Text(usuario.nome),
+        subtitle: Text(usuario.email),
+        trailing: PopupMenuButton(
+          itemBuilder: (context) {
+            return [
+              PopupMenuItem(
+                value: 'editar',
+                child: Text('Editar'),
+              ),
+              PopupMenuItem(
+                value: 'deletar',
+                child: Text('Deletar'),
+              ),
+              PopupMenuItem(
+                value: 'promover',
+                child: Text('Promover a Organizador'),
+              )
+            ];
+          },
+          onSelected: (String value) =>
+              actionPopUpItemSelected(value, usuario.id),
+        ),
+      );
 
-Widget buildOrganizador(Usuario usuario) => ListTile(
-      leading: CircleAvatar(child: Text('${usuario.nome[0]}')),
-      title: Text(usuario.nome),
-      subtitle: Text(usuario.email),
-      trailing: PopupMenuButton(
-        itemBuilder: (context) {
-          return [
-            PopupMenuItem(
-              value: 'editar',
-              child: Text('Editar'),
-            ),
-            PopupMenuItem(
-              value: 'deletar',
-              child: Text('Deletar'),
-            ),
-            PopupMenuItem(
-              value: 'remover',
-              child: Text('Remover de Organizador'),
-            )
-          ];
-        },
-        onSelected: (String value) =>
-            actionPopUpItemSelected(value, usuario.id),
-      ),
-    );
+  Widget buildOrganizador(Usuario usuario) => ListTile(
+        leading: CircleAvatar(child: Text('${usuario.nome[0]}')),
+        title: Text(usuario.nome),
+        subtitle: Text(usuario.email),
+        trailing: PopupMenuButton(
+          itemBuilder: (context) {
+            return [
+              PopupMenuItem(
+                value: 'editar',
+                child: Text('Editar'),
+              ),
+              PopupMenuItem(
+                value: 'deletar',
+                child: Text('Deletar'),
+              ),
+              PopupMenuItem(
+                value: 'remover',
+                child: Text('Remover de Organizador'),
+              )
+            ];
+          },
+          onSelected: (String value) =>
+              actionPopUpItemSelected(value, usuario.id),
+        ),
+      );
 
-void actionPopUpItemSelected(String value, String id) {
-  if (value == 'editar') {
-    print('Você selecionou EDITAR');
-  } else if (value == 'deletar') {
-    print('Você selecionou DELETAR');
-    final currentUser = FirebaseAuth.instance.currentUser;
-    CollectionReference usuarios =
-        FirebaseFirestore.instance.collection('usuarios');
+  void actionPopUpItemSelected(String value, String id) {
+    if (value == 'editar') {
+      print('Você selecionou EDITAR');
+      setState(() {});
+    } else if (value == 'deletar') {
+      print('Você selecionou DELETAR');
+      final currentUser = FirebaseAuth.instance.currentUser;
+      CollectionReference usuarios =
+          FirebaseFirestore.instance.collection('usuarios');
 
-    Future<void> deleteUser() {
-      return usuarios
-          .doc(id)
-          .delete()
-          .then((value) => print("User Deleted"))
-          .catchError((error) => print("Failed to delete user: $error"));
+      Future<void> deleteUser() {
+        return usuarios
+            .doc(id)
+            .delete()
+            .then((value) => print("User Deleted"))
+            .catchError((error) => print("Failed to delete user: $error"));
+      }
+
+      deleteUser();
+      setState(() {});
+    } else if (value == 'promover') {
+      CollectionReference usuarios =
+          FirebaseFirestore.instance.collection('usuarios');
+
+      Future<void> updateUser() {
+        return usuarios
+            .doc(id)
+            .update({'org': 's'})
+            .then((value) => print("User Updated"))
+            .catchError((error) => print("Failed to update user: $error"));
+      }
+
+      updateUser();
+      setState(() {});
+    } else if (value == 'remover') {
+      final currentUser = FirebaseAuth.instance.currentUser;
+
+      CollectionReference usuarios =
+          FirebaseFirestore.instance.collection('usuarios');
+
+      Future<void> updateUser() {
+        return usuarios
+            .doc(id)
+            .update({'org': 'n'})
+            .then((value) => print("User Updated"))
+            .catchError((error) => print("Failed to update user: $error"));
+      }
+
+      updateUser();
+      setState(() {});
+      print('Você selecionou REMOVER DE ORG');
+    } else {
+      print('Not implemented');
     }
-
-    deleteUser();
-  } else if (value == 'promover') {
-    CollectionReference usuarios =
-        FirebaseFirestore.instance.collection('usuarios');
-
-    Future<void> updateUser() {
-      return usuarios
-          .doc(id)
-          .update({'org': 's'})
-          .then((value) => print("User Updated"))
-          .catchError((error) => print("Failed to update user: $error"));
-    }
-
-    updateUser();
-  } else if (value == 'remover') {
-    final currentUser = FirebaseAuth.instance.currentUser;
-
-    CollectionReference usuarios =
-        FirebaseFirestore.instance.collection('usuarios');
-
-    Future<void> updateUser() {
-      return usuarios
-          .doc(id)
-          .update({'org': 'n'})
-          .then((value) => print("User Updated"))
-          .catchError((error) => print("Failed to update user: $error"));
-    }
-
-    updateUser();
-
-    print('Você selecionou REMOVER DE ORG');
-  } else {
-    print('Not implemented');
   }
 }
