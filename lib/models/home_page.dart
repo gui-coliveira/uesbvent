@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uesbvent/models/codSeguranca_page.dart';
+import 'package:uesbvent/models/crachaVirtual_page.dart';
+import 'package:uesbvent/models/eventosInscritos_page.dart';
 import 'package:uesbvent/models/login_page.dart';
 import 'package:uesbvent/models/recover_page.dart';
 import 'package:uesbvent/models/validarcertificado_page.dart';
@@ -88,6 +90,16 @@ class _HomePageState extends State<HomePage> {
               title: Text("Meu perfil"),
               onTap: () {
                 Navigator.pop(context);
+                //Navegar para outra página
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.event_rounded),
+              title: Text("Eventos Inscritos"),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => EventosInscritosPage()));
                 //Navegar para outra página
               },
             ),
@@ -184,6 +196,12 @@ class _HomePageState extends State<HomePage> {
                 value: 'visualizar',
                 child: Text('Visualizar'),
               ),
+              PopupMenuItem(
+                value: currentUser?.email != null ? 'cracha' : 'login',
+                child: currentUser?.email != null
+                    ? Text('Crachá Virtual')
+                    : Text('Login'),
+              ),
             ];
           },
           onSelected: (String value) {
@@ -200,6 +218,12 @@ class _HomePageState extends State<HomePage> {
           .push(MaterialPageRoute(builder: (context) => EventoPage(evento)));
       //---------------------
       //---------------------
+    } else if (value == 'cracha') {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => CrachaVirtualPage()));
+    } else if (value == 'login') {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => LoginPage()));
     } else {
       print('Not implemented');
       //---------------------

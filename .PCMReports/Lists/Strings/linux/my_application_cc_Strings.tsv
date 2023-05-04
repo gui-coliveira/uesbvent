@@ -1,0 +1,6 @@
+COUNT	LENGTH	DATA
+2	8	uesbvent
+1	22	Failed to register: %s
+1	11	GNOME Shell
+1	14	application-id
+1	5	flags

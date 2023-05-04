@@ -1,0 +1,4 @@
+COUNT	LENGTH	DATA
+1	16	FlPluginRegistry
+1	19	fl_register_plugins
+1	8	registry

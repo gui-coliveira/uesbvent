@@ -1,0 +1,9 @@
+COUNT	LENGTH	DATA
+2	6	String
+1	10	BUILD_TYPE
+1	7	Boolean
+1	11	BuildConfig
+1	5	DEBUG
+1	20	LIBRARY_PACKAGE_NAME
+1	7	boolean
+1	12	parseBoolean

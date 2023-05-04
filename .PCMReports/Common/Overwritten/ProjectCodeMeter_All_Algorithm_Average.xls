@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <LastAuthor>Unregistered Trial</LastAuthor>
+  <Created>2023-04-17T19:05:10Z</Created>
+  <Version>11.5606</Version>
+ </DocumentProperties>
+ <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <WindowHeight>8970</WindowHeight>
+  <WindowWidth>15315</WindowWidth>
+  <WindowTopX>0</WindowTopX>
+  <WindowTopY>0</WindowTopY>
+  <AcceptLabelsInFormulas/>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+ </ExcelWorkbook>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Vertical="Bottom"/>
+   <Borders/>
+   <Font x:CharSet="177"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+ </Styles>
+ <Worksheet ss:Name="Sheet1">
+  <Table ss:ExpandedColumnCount="3" ss:ExpandedRowCount="31" x:FullColumns="1"
+   x:FullRows="1">
+   <Column ss:AutoFitWidth="0" ss:Width="127.5"/>
+   <Column ss:AutoFitWidth="0" ss:Width="159"/>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">Project All Algorithm Average Report</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String"></Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">Report Creation Time:</Data></Cell>
+    <Cell><Data ss:Type="String"> 04/17/2023</Data></Cell>
+    <Cell><Data ss:Type="String"> 19:05:10</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">Created by:</Data></Cell>
+    <Cell><Data ss:Type="String"> ProjectCodeMeter Pro v2.43</Data></Cell>
+    <Cell><Data ss:Type="String"> Licensed to Unregistered Trial</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String"></Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">Settings:</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">Analysis Type:</Data></Cell>
+    <Cell><Data ss:Type="String">Normal</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">Developer Price per Hour:</Data></Cell>
+    <Cell><Data ss:Type="Number">120</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">Quality Guarantee:</Data></Cell>
+    <Cell><Data ss:Type="String">First Release (v1.0) 3-Sigma</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">Platform Maturity:</Data></Cell>
+    <Cell><Data ss:Type="String">Popular Stable and Documented</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">Debugging Tools:</Data></Cell>
+    <Cell><Data ss:Type="String">Complete system Step Emulator / VM / ICE</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">Project Folder:</Data></Cell>
+    <Cell><Data ss:Type="String">D:\Pastas\Documentos\UESB\dev\uesbvent\uesbvent\</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">Previous Version Folder:</Data></Cell>
+    <Cell><Data ss:Type="String"></Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String"></Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">Algorithm Result Comparison</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String"> </Data></Cell>
+    <Cell><Data ss:Type="String">Time (hours)</Data></Cell>
+    <Cell><Data ss:Type="String">Cost ($)</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">WMFP+APPW</Data></Cell>
+    <Cell><Data ss:Type="Number">652.4</Data></Cell>
+    <Cell><Data ss:Type="Number">78292</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">WMFP+APPW without Duplicates</Data></Cell>
+    <Cell ss:Formula="=652.4-5.4"><Data ss:Type="Number"></Data></Cell>    
+    <Cell ss:Formula="=78292-644"><Data ss:Type="Number"></Data></Cell>    
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">COCOMO 81</Data></Cell>
+    <Cell><Data ss:Type="Number">98.9</Data></Cell>
+    <Cell><Data ss:Type="Number">11866</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">COCOMO II 2000</Data></Cell>
+    <Cell><Data ss:Type="Number">67.3</Data></Cell>
+    <Cell><Data ss:Type="Number">8078</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">REVIC 9.2 Development</Data></Cell>
+    <Cell><Data ss:Type="Number">93.1</Data></Cell>
+    <Cell><Data ss:Type="Number">11170</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String"></Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">All Algorithm Averages</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String"></Data></Cell>
+    <Cell><Data ss:Type="String">Time (hours)</Data></Cell>
+    <Cell><Data ss:Type="String">Cost ($)</Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">Optimistic:</Data></Cell>
+    <Cell ss:Formula="=MIN(R[-8]C:R[-4]C)"><Data ss:Type="Number"></Data></Cell>
+    <Cell ss:Formula="=MIN(R[-8]C:R[-4]C)"><Data ss:Type="Number"></Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">Average:</Data></Cell>
+    <Cell ss:Formula="=AVERAGE(R[-9]C:R[-5]C)"><Data ss:Type="Number"></Data></Cell>
+    <Cell ss:Formula="=AVERAGE(R[-9]C:R[-5]C)"><Data ss:Type="Number"></Data></Cell>
+   </Row>
+   <Row ss:AutoFitHeight="0">
+    <Cell><Data ss:Type="String">Pessimistic:</Data></Cell>
+    <Cell ss:Formula="=MAX(R[-10]C:R[-6]C)"><Data ss:Type="Number"></Data></Cell>
+    <Cell ss:Formula="=MAX(R[-10]C:R[-6]C)"><Data ss:Type="Number"></Data></Cell>
+   </Row>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <Unsynced/>
+   <Print>
+    <Gridlines/>
+   </Print>
+   <Selected/>
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <ActiveRow>21</ActiveRow>
+     <ActiveCol>1</ActiveCol>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+</Workbook>

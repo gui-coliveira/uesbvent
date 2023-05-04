@@ -1,0 +1,12 @@
+COUNT	LENGTH	DATA
+2	3	app
+2	4	argc
+2	4	argv
+2	3	int
+1	13	G_APPLICATION
+1	13	MyApplication
+1	4	char
+1	17	g_application_run
+1	9	g_autoptr
+1	4	main
+1	18	my_application_new

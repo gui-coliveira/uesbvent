@@ -1,0 +1,46 @@
+
+2023-04-17 19:04:38: ---- Analysis requested -----
+
+2023-04-17 19:04:38: ProjectCodeMeter version: Pro v2.43
+
+2023-04-17 19:04:38: Analysis type: 0
+
+2023-04-17 19:04:38: Analysis mode: 0
+
+2023-04-17 19:04:38: Project Folder: D:\Pastas\Documentos\UESB\dev\uesbvent\uesbvent\
+
+2023-04-17 19:04:38: User: Unregistered Trial
+
+2023-04-17 19:04:47:  source files: 18
+
+
+2023-04-17 19:04:52:  source size: 124929 (122KB)
+
+
+2023-04-17 19:04:53:  done.
+
+
+2023-04-17 19:04:53: Analysis request pending state: TRUE
+
+2023-04-17 19:04:53: Analysis start successful
+
+2023-04-17 19:05:13: Analysis is in progress
+Stop analyzing?
+
+2023-04-17 19:05:14: User chose YES
+
+2023-04-17 19:05:19: ProjectCodeMeter version: Pro v2.43
+
+2023-04-17 19:05:19: Analysis type: 0
+
+2023-04-17 19:05:19: Analysis mode: 0
+
+2023-04-17 19:05:19: Project Folder: D:\Pastas\Documentos\UESB\dev\uesbvent\uesbvent\
+
+2023-04-17 19:05:19: User: Unregistered Trial
+
+2023-04-17 19:05:19: Some reports not created due to user abort.
+
+2023-04-17 19:05:19: finishing analysis
+
+2023-04-17 19:05:19: DONE. back to idle.

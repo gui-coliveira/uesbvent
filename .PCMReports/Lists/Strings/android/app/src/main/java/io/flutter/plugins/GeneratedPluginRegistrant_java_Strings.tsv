@@ -1,0 +1,7 @@
+COUNT	LENGTH	DATA
+1	110	Error registering plugin cloud_firestore, io.flutter.plugins.firebase.firestore.FlutterFirebaseFirestorePlugin
+1	98	Error registering plugin firebase_auth, io.flutter.plugins.firebase.auth.FlutterFirebaseAuthPlugin
+1	98	Error registering plugin firebase_core, io.flutter.plugins.firebase.core.FlutterFirebaseCorePlugin
+1	140	Error registering plugin flutter_plugin_android_lifecycle, io.flutter.plugins.flutter_plugin_android_lifecycle.FlutterAndroidLifecyclePlugin
+1	95	Error registering plugin image_picker_android, io.flutter.plugins.imagepicker.ImagePickerPlugin
+1	25	GeneratedPluginRegistrant

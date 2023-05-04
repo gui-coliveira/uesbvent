@@ -92,6 +92,14 @@ class _OrganizadorPageState extends State<OrganizadorPage> {
               },
             ),
             ListTile(
+              leading: Icon(Icons.event_rounded),
+              title: Text("Eventos Inscritos"),
+              onTap: () {
+                Navigator.pop(context);
+                //Navegar para outra página
+              },
+            ),
+            ListTile(
               leading: Icon(Icons.create_new_folder_rounded),
               title: Text("Criar Evento"),
               onTap: () {
