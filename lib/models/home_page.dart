@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromARGB(255, 227, 30, 37),
       appBar: AppBar(
         backgroundColor: Colors.indigo,
         centerTitle: true,
@@ -172,7 +172,7 @@ class _HomePageState extends State<HomePage> {
       .map((snapshot) =>
           snapshot.docs.map((doc) => Evento.fromJson(doc.data())).toList());
 
-  Widget buildEvento(Evento evento) => ListTile(
+  /*Widget buildEvento(Evento evento) => ListTile(
         //leading: CircleAvatar(child: Icon(Icons.person)),
         title: Text(
           evento.title,
@@ -207,6 +207,51 @@ class _HomePageState extends State<HomePage> {
           onSelected: (String value) {
             actionPopUpItemSelected(value, evento);
           },
+        ),
+      );*/
+
+  Widget buildEvento(Evento evento) => GestureDetector(
+        onTap: () {
+          print('Selecionou ' + evento.title);
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => EventoPage(evento)));
+        },
+        child: Container(
+          color: Colors.grey,
+          height: 110,
+          width: 70,
+          alignment: Alignment.topLeft,
+          margin: const EdgeInsets.fromLTRB(15, 40, 15, 0),
+          child: Column(
+            children: [
+              Text(
+                evento.title,
+                maxLines: 3,
+                textAlign: TextAlign.center,
+                // ignore: prefer_const_constructors
+                style: TextStyle(
+                  fontSize: 14,
+                ),
+              ),
+              Container(
+                height: 69,
+                width: 330,
+                color: Colors.white,
+                margin: const EdgeInsets.fromLTRB(0, 25, 0, 0),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    evento.descricao,
+                    maxLines: 5,
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       );
 
