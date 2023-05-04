@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:uesbvent/models/evento_page.dart';
 
 import 'codSeguranca_page.dart';
+import 'evento.dart';
 import 'login_page.dart';
 import 'recover_page.dart';
 import 'validarcertificado_page.dart';
@@ -17,17 +20,29 @@ class _EventosInscritosPageState extends State<EventosInscritosPage> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final currentUser = FirebaseAuth.instance.currentUser;
 
+  int usuarioInscrito = 0;
+  bool isJaInscrito = false;
+
   @override
+  void initState() {
+    super.initState();
+    jaInscrito().then((value) {
+      setState(() {
+        isJaInscrito = value;
+      });
+    });
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.indigo,
         centerTitle: true,
-        title: SizedBox(
-          height: 48.0,
-          child: Image.asset('assets/logo_universidade.png'),
-        ),
+        title: Text('Eventos Inscritos',
+            style: TextStyle(
+              fontSize: 30,
+            )),
         actions: <Widget>[
           TextButton(
             child: currentUser?.email != null ? Text('Sair') : Text('Login'),
@@ -46,6 +61,8 @@ class _EventosInscritosPageState extends State<EventosInscritosPage> {
             },
           ),
         ],
+
+        // const [Icon(Icons.filter_alt_rounded)]
       ),
       drawer: Drawer(
         child: ListView(
@@ -72,6 +89,14 @@ class _EventosInscritosPageState extends State<EventosInscritosPage> {
             ListTile(
               leading: Icon(Icons.person),
               title: Text("Meu perfil"),
+              onTap: () {
+                Navigator.pop(context);
+                //Navegar para outra página
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.event_rounded),
+              title: Text("Eventos Inscritos"),
               onTap: () {
                 Navigator.pop(context);
                 //Navegar para outra página
@@ -115,7 +140,103 @@ class _EventosInscritosPageState extends State<EventosInscritosPage> {
           ],
         ),
       ),
-      body: ListView(),
+      body: buildEventList(),
     );
+  }
+
+  Future<void> signOut() async {
+    print('Sign Out');
+    await FirebaseAuth.instance.signOut();
+  }
+
+  Widget buildEventList() {
+    return FutureBuilder<List<Evento>>(
+      future: readEventos().first,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final eventos = snapshot.data!;
+          if (isJaInscrito == true) {
+            return ListView(
+              children: eventos.map(buildEvento).toList(),
+            );
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
+    );
+  }
+
+  Stream<List<Evento>> readEventos() => FirebaseFirestore.instance
+      .collection('eventos')
+      .snapshots()
+      .map((snapshot) =>
+          snapshot.docs.map((doc) => Evento.fromJson(doc.data())).toList());
+
+  Widget buildEvento(Evento evento) => ListTile(
+        title: Text(
+          evento.title,
+          maxLines: 1,
+        ),
+        subtitle: Text(
+          evento.descricao,
+          maxLines: 2,
+          textAlign: TextAlign.justify,
+          overflow: TextOverflow.ellipsis,
+        ),
+        onTap: () {
+          print('Selecionou ' + evento.title);
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => EventoPage(evento)));
+        },
+        trailing: PopupMenuButton(
+          itemBuilder: (context) {
+            return [
+              PopupMenuItem(
+                value: 'visualizar',
+                child: Text('Visualizar'),
+              ),
+            ];
+          },
+          onSelected: (String value) {
+            actionPopUpItemSelected(value, evento);
+          },
+        ),
+      );
+
+  void actionPopUpItemSelected(String value, Evento evento) {
+    if (value == 'visualizar') {
+      print('VISUALIZAR EVENTO');
+      print(evento.title);
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => EventoPage(evento)));
+      //---------------------
+      //---------------------
+    } else {
+      print('Not implemented');
+      //---------------------
+      //---------------------
+    }
+  }
+
+  Future<bool> jaInscrito() async {
+    await FirebaseFirestore.instance
+        .collection('inscricoes')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        if (doc['usuarioId'] == currentUser!.uid) {
+          usuarioInscrito = 1;
+        }
+      });
+    });
+
+    if (usuarioInscrito == 1) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
