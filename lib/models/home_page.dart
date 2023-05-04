@@ -7,6 +7,7 @@ import 'package:uesbvent/models/codSeguranca_page.dart';
 import 'package:uesbvent/models/crachaVirtual_page.dart';
 import 'package:uesbvent/models/eventosInscritos_page.dart';
 import 'package:uesbvent/models/login_page.dart';
+import 'package:uesbvent/models/meuPerfil_page.dart';
 import 'package:uesbvent/models/recover_page.dart';
 import 'package:uesbvent/models/validarcertificado_page.dart';
 import '../models/evento.dart';
@@ -90,7 +91,8 @@ class _HomePageState extends State<HomePage> {
               title: Text("Meu perfil"),
               onTap: () {
                 Navigator.pop(context);
-                //Navegar para outra página
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => MeuPerfilPage()));
               },
             ),
             ListTile(
