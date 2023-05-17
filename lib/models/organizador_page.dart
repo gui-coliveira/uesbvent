@@ -128,15 +128,6 @@ class _OrganizadorPageState extends State<OrganizadorPage> {
                     MaterialPageRoute(builder: (context) => MembrosPage()));
               },
             ),
-            ListTile(
-              leading: Icon(Icons.domain_verification),
-              title: Text("Validar Presença"),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => PresencaPage()));
-              },
-            ),
           ],
         ),
       ),
@@ -200,6 +191,10 @@ class _OrganizadorPageState extends State<OrganizadorPage> {
                 child: Text('Visualizar'),
               ),
               PopupMenuItem(
+                value: 'presenca',
+                child: Text('Validar Presença'),
+              ),
+              PopupMenuItem(
                 value: 'editar',
                 child: Text('Editar'),
               ),
@@ -221,6 +216,13 @@ class _OrganizadorPageState extends State<OrganizadorPage> {
       print(evento.title);
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => EventoPage(evento)));
+      //---------------------
+      //---------------------
+    } else if (value == 'presenca') {
+      print('VISUALIZAR EVENTO');
+      print(evento.title);
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => PresencaPage(evento)));
       //---------------------
       //---------------------
     } else if (value == 'deletar') {

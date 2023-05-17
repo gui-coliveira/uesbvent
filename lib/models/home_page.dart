@@ -22,7 +22,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // UserCredential userCredential = FirebaseAuth.instance.;
   final FirebaseAuth auth = FirebaseAuth.instance;
   final currentUser = FirebaseAuth.instance.currentUser;
 
@@ -91,7 +90,7 @@ class _HomePageState extends State<HomePage> {
               title: Text("Meu perfil"),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.of(context).push(
+                Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => MeuPerfilPage()));
               },
             ),

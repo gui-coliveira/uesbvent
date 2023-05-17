@@ -82,7 +82,6 @@ class _EventoPageState extends State<EventoPage> {
                 widget.evento.title,
                 maxLines: 2,
                 textAlign: TextAlign.justify,
-                // ignore: prefer_const_constructors
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
@@ -156,7 +155,8 @@ class _EventoPageState extends State<EventoPage> {
 
   Future inscreverEvento(String? usuarioId, String eventoId) async {
     try {
-      final inscricao = Inscricao(usuarioId: usuarioId!, eventoId: eventoId);
+      final inscricao =
+          Inscricao(usuarioId: usuarioId!, eventoId: eventoId, presente: 'n');
 
       final docUser = FirebaseFirestore.instance.collection('inscricoes').doc();
 

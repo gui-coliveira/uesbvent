@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:uesbvent/models/codSeguranca_page.dart';
 import 'package:uesbvent/models/eventosInscritos_page.dart';
+import 'package:uesbvent/models/home_page.dart';
 import 'package:uesbvent/models/login_page.dart';
 import 'package:uesbvent/models/recover_page.dart';
 import 'package:uesbvent/models/usuario.dart';
@@ -44,6 +46,20 @@ class _MeuPerfilPageState extends State<MeuPerfilPage> {
           title: SizedBox(
             height: 48.0,
             child: Image.asset('assets/logo_universidade.png'),
+          ),
+          leading: ElevatedButton(
+            child: Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+              size: 30.0,
+            ),
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => HomePage()));
+            },
           ),
           actions: <Widget>[
             TextButton(
@@ -180,6 +196,18 @@ class _MeuPerfilPageState extends State<MeuPerfilPage> {
                     minimumSize: Size(120.0, 50.0),
                   ),
                   onPressed: () {
+                    //
+                    var updatedados =
+                        FirebaseFirestore.instance.collection('usuarios');
+
+                    updatedados
+                        .doc(currentUser?.uid)
+                        .update({'nome': controllerNome.text})
+                        .then((_) => print('Updated'))
+                        .catchError((error) => print('Update failed: $error'));
+
+                    currentUser?.updateDisplayName(controllerNome.text);
+
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Container(
