@@ -5,35 +5,35 @@ import 'package:uesbvent/models/codSeguranca_page.dart';
 import 'package:uesbvent/models/eventosInscritos_page.dart';
 import 'package:uesbvent/models/home_page.dart';
 import 'package:uesbvent/models/login_page.dart';
+import 'package:uesbvent/models/organizador_page.dart';
 import 'package:uesbvent/models/recover_page.dart';
 import 'package:uesbvent/models/usuario.dart';
 import 'package:uesbvent/models/validarcertificado_page.dart';
 
-class MeuPerfilPage extends StatefulWidget {
+import 'evento.dart';
+
+class EditarEventoPage extends StatefulWidget {
+  final Evento evento;
+  EditarEventoPage(this.evento);
+
   @override
-  State<MeuPerfilPage> createState() => _MeuPerfilPageState();
+  State<EditarEventoPage> createState() => _EditarEventoPageState();
 }
 
-class _MeuPerfilPageState extends State<MeuPerfilPage> {
+class _EditarEventoPageState extends State<EditarEventoPage> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final currentUser = FirebaseAuth.instance.currentUser;
 
-  var controllerNome = TextEditingController();
-  var controllerEmail = TextEditingController();
-  var controllerPassword = TextEditingController();
-  var controllerCelular = TextEditingController();
-  var controllerDtNascimento = TextEditingController();
-  var controllerCurso = TextEditingController();
+  var controllerTitulo = TextEditingController();
+  var controllerDescricao = TextEditingController();
 
   void initState() {
     super.initState();
 
-    controllerNome =
-        new TextEditingController(text: currentUser?.displayName as String);
-    controllerEmail =
-        new TextEditingController(text: currentUser?.email as String);
-    // controllerCelular =
-    //     new TextEditingController(text: currentUser?.phoneNumber as String);
+    controllerTitulo =
+        new TextEditingController(text: widget.evento.title as String);
+    controllerDescricao =
+        new TextEditingController(text: widget.evento.descricao as String);
   }
 
   @override
@@ -41,26 +41,26 @@ class _MeuPerfilPageState extends State<MeuPerfilPage> {
     return Scaffold(
         backgroundColor: Colors.red,
         appBar: AppBar(
-          backgroundColor: Colors.indigo,
+          backgroundColor: Colors.deepOrangeAccent,
           centerTitle: true,
           title: SizedBox(
             height: 48.0,
             child: Image.asset('assets/logo_universidade.png'),
           ),
-          // leading: ElevatedButton(
-          //   child: Icon(
-          //     Icons.arrow_back,
-          //     color: Colors.white,
-          //     size: 30.0,
-          //   ),
-          //   style: TextButton.styleFrom(
-          //     foregroundColor: Colors.white,
-          //   ),
-          //   onPressed: () {
-          //     Navigator.of(context).pushReplacement(
-          //         MaterialPageRoute(builder: (context) => HomePage()));
-          //   },
-          // ),
+          leading: ElevatedButton(
+            child: Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+              size: 30.0,
+            ),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.deepOrangeAccent, // Define a cor de fundo
+            ),
+            onPressed: () {
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => OrganizadorPage()));
+            },
+          ),
           actions: <Widget>[
             TextButton(
               child: currentUser?.email != null ? Text('Sair') : Text('Login'),
@@ -87,17 +87,18 @@ class _MeuPerfilPageState extends State<MeuPerfilPage> {
               height: 10,
             ),
 
-            // CONTAINER PARA A FOTO DE PERFIL ----------------------------
+            // CONTAINER PARA A FOTO DO EVENTO ----------------------------
             Container(
               margin: const EdgeInsets.only(left: 20.0, right: 20.0),
               width: 10,
-              height: 300,
+              height: 200,
+              //color: Colors.white,
               //color: Color.fromARGB(255, 227, 30, 37),
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: NetworkImage(
-                      "https://louisville.edu/enrollmentmanagement/images/person-icon/image"),
+                      "https://static.vecteezy.com/system/resources/previews/006/692/012/original/calendar-date-date-notes-business-office-event-icon-template-black-color-editable-calendar-date-symbol-flat-illustration-for-graphic-and-web-design-free-vector.jpg"),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -122,11 +123,11 @@ class _MeuPerfilPageState extends State<MeuPerfilPage> {
             ),
 
             TextFormField(
-              controller: controllerNome,
+              controller: controllerTitulo,
               decoration: const InputDecoration(
                   filled: true,
                   fillColor: Colors.white,
-                  labelText: 'Nome',
+                  labelText: 'Título',
                   labelStyle: TextStyle(
                     color: Colors.grey,
                     fontWeight: FontWeight.w400,
@@ -143,50 +144,33 @@ class _MeuPerfilPageState extends State<MeuPerfilPage> {
             ),
 
             TextFormField(
-              controller: controllerEmail,
-              keyboardType: TextInputType.emailAddress,
+              controller: controllerDescricao,
               decoration: const InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  labelText: "E-mail",
-                  labelStyle: TextStyle(
-                    color: Colors.grey,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 15,
-                  )),
+                filled: true,
+                fillColor: Colors.white,
+                labelText: 'Descrição',
+                labelStyle: TextStyle(
+                  color: Colors.grey,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 15,
+                ),
+              ),
               style: const TextStyle(
                 fontSize: 20,
                 color: Colors.black,
               ),
+              maxLines: 6, // Permite múltiplas linhas
             ),
 
             const SizedBox(
               height: 30,
             ),
 
-            // TextFormField(
-            //   controller: controllerCelular,
-            //   keyboardType: TextInputType.phone,
-            //   decoration: const InputDecoration(
-            //       filled: true,
-            //       fillColor: Colors.white,
-            //       labelText: 'Celular',
-            //       labelStyle: TextStyle(
-            //         color: Colors.grey,
-            //         fontWeight: FontWeight.w400,
-            //         fontSize: 15,
-            //       )),
-            //   style: const TextStyle(
-            //     fontSize: 20,
-            //     color: Colors.black,
-            //   ),
-            // ),
-
             Column(
               children: [
                 OutlinedButton(
                   child: Text(
-                    'Atualizar Dados',
+                    'Atualizar Evento',
                     style: TextStyle(fontSize: 18),
                   ),
                   style: OutlinedButton.styleFrom(
@@ -197,15 +181,16 @@ class _MeuPerfilPageState extends State<MeuPerfilPage> {
                   onPressed: () {
                     //
                     var updatedados =
-                        FirebaseFirestore.instance.collection('usuarios');
+                        FirebaseFirestore.instance.collection('eventos');
 
                     updatedados
-                        .doc(currentUser?.uid)
-                        .update({'nome': controllerNome.text})
+                        .doc(widget.evento.id)
+                        .update({
+                          'title': controllerTitulo.text,
+                          'descricao': controllerDescricao.text
+                        })
                         .then((_) => print('Updated'))
                         .catchError((error) => print('Update failed: $error'));
-
-                    currentUser?.updateDisplayName(controllerNome.text);
 
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(

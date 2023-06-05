@@ -6,13 +6,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:uesbvent/models/criarEvento_page.dart';
+import 'package:uesbvent/models/editarEvento_page.dart';
 import 'package:uesbvent/models/evento_page.dart';
 import 'package:uesbvent/models/login_page.dart';
 import 'package:uesbvent/models/membros_page.dart';
 import 'package:uesbvent/models/notificacao_page.dart';
 import 'package:uesbvent/models/presenca_page.dart';
 import '../models/evento.dart';
-import 'OLDcriaeventopage.dart';
+import 'participantesEvento_page.dart';
 
 // ignore: must_be_immutable
 class OrganizadorPage extends StatefulWidget {
@@ -195,6 +196,10 @@ class _OrganizadorPageState extends State<OrganizadorPage> {
                 child: Text('Validar Presença'),
               ),
               PopupMenuItem(
+                value: 'cadastrarcertificados',
+                child: Text('Cadastrar Certificados'),
+              ),
+              PopupMenuItem(
                 value: 'editar',
                 child: Text('Editar'),
               ),
@@ -219,10 +224,22 @@ class _OrganizadorPageState extends State<OrganizadorPage> {
       //---------------------
       //---------------------
     } else if (value == 'presenca') {
-      print('VISUALIZAR EVENTO');
+      print('PRESENCA');
       print(evento.title);
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => PresencaPage(evento)));
+      //---------------------
+      //---------------------
+    } else if (value == 'cadastrarcertificados') {
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => ParticipantesEventoPage()));
+      //---------------------
+      //---------------------
+    } else if (value == 'editar') {
+      print('EDITAR');
+      print(evento.title);
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => EditarEventoPage(evento)));
       //---------------------
       //---------------------
     } else if (value == 'deletar') {
