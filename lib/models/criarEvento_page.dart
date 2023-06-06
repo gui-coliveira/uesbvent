@@ -146,7 +146,7 @@ class _CriarEvento_PageState extends State<CriarEvento_Page> {
               decoration: const InputDecoration(
                 filled: true,
                 fillColor: Colors.white,
-                labelText: "Curso",
+                labelText: "Curso (Opcional)",
                 labelStyle: TextStyle(
                   color: Color.fromARGB(255, 104, 104, 104),
                   fontWeight: FontWeight.w400,

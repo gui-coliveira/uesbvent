@@ -92,7 +92,6 @@ class _MeuPerfilPageState extends State<MeuPerfilPage> {
               margin: const EdgeInsets.only(left: 20.0, right: 20.0),
               width: 10,
               height: 300,
-              //color: Color.fromARGB(255, 227, 30, 37),
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -163,24 +162,6 @@ class _MeuPerfilPageState extends State<MeuPerfilPage> {
             const SizedBox(
               height: 30,
             ),
-
-            // TextFormField(
-            //   controller: controllerCelular,
-            //   keyboardType: TextInputType.phone,
-            //   decoration: const InputDecoration(
-            //       filled: true,
-            //       fillColor: Colors.white,
-            //       labelText: 'Celular',
-            //       labelStyle: TextStyle(
-            //         color: Colors.grey,
-            //         fontWeight: FontWeight.w400,
-            //         fontSize: 15,
-            //       )),
-            //   style: const TextStyle(
-            //     fontSize: 20,
-            //     color: Colors.black,
-            //   ),
-            // ),
 
             Column(
               children: [

@@ -64,82 +64,82 @@ class _EventosInscritosPageState extends State<EventosInscritosPage> {
 
         // const [Icon(Icons.filter_alt_rounded)]
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            UserAccountsDrawerHeader(
-              currentAccountPicture: CircleAvatar(
-                  child: currentUser?.displayName == null
-                      ? Icon(Icons.person)
-                      : Text('${currentUser?.displayName![0]}',
-                          style: TextStyle(
-                            fontSize: 30,
-                          ))),
-              accountName: currentUser?.displayName != null
-                  ? Text(currentUser?.displayName as String)
-                  : Text(
-                      'Visitante',
-                      style: TextStyle(fontSize: 18),
-                    ),
-              accountEmail: currentUser?.email != null
-                  ? Text(currentUser?.email as String)
-                  : Text(''),
-            ),
-            ListTile(
-              leading: Icon(Icons.person),
-              title: Text("Meu perfil"),
-              onTap: () {
-                Navigator.pop(context);
-                //Navegar para outra página
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.event_rounded),
-              title: Text("Eventos Inscritos"),
-              onTap: () {
-                Navigator.pop(context);
-                //Navegar para outra página
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.notifications),
-              title: Text("Notificações"),
-              onTap: () {
-                Navigator.pop(context);
-                //Navegar para outra página
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.bookmark_added_rounded),
-              title: Text("Validar certificado"),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => ValidarCertificadoPage()));
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.emergency),
-              title: Text("Recuperar acesso"),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => RecoverPage()));
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.security),
-              title: Text("Código de segurança"),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => CodSegurancaPage()));
-              },
-            ),
-          ],
-        ),
-      ),
+      // drawer: Drawer(
+      //   child: ListView(
+      //     padding: EdgeInsets.zero,
+      //     children: <Widget>[
+      //       UserAccountsDrawerHeader(
+      //         currentAccountPicture: CircleAvatar(
+      //             child: currentUser?.displayName == null
+      //                 ? Icon(Icons.person)
+      //                 : Text('${currentUser?.displayName![0]}',
+      //                     style: TextStyle(
+      //                       fontSize: 30,
+      //                     ))),
+      //         accountName: currentUser?.displayName != null
+      //             ? Text(currentUser?.displayName as String)
+      //             : Text(
+      //                 'Visitante',
+      //                 style: TextStyle(fontSize: 18),
+      //               ),
+      //         accountEmail: currentUser?.email != null
+      //             ? Text(currentUser?.email as String)
+      //             : Text(''),
+      //       ),
+      //       ListTile(
+      //         leading: Icon(Icons.person),
+      //         title: Text("Meu perfil"),
+      //         onTap: () {
+      //           Navigator.pop(context);
+      //           //Navegar para outra página
+      //         },
+      //       ),
+      //       ListTile(
+      //         leading: Icon(Icons.event_rounded),
+      //         title: Text("Eventos Inscritos"),
+      //         onTap: () {
+      //           Navigator.pop(context);
+      //           //Navegar para outra página
+      //         },
+      //       ),
+      //       ListTile(
+      //         leading: Icon(Icons.notifications),
+      //         title: Text("Notificações"),
+      //         onTap: () {
+      //           Navigator.pop(context);
+      //           //Navegar para outra página
+      //         },
+      //       ),
+      //       ListTile(
+      //         leading: Icon(Icons.bookmark_added_rounded),
+      //         title: Text("Validar certificado"),
+      //         onTap: () {
+      //           Navigator.pop(context);
+      //           Navigator.of(context).push(MaterialPageRoute(
+      //               builder: (context) => ValidarCertificadoPage()));
+      //         },
+      //       ),
+      //       ListTile(
+      //         leading: Icon(Icons.emergency),
+      //         title: Text("Recuperar acesso"),
+      //         onTap: () {
+      //           Navigator.pop(context);
+      //           Navigator.of(context).push(
+      //               MaterialPageRoute(builder: (context) => RecoverPage()));
+      //         },
+      //       ),
+      //       ListTile(
+      //         leading: Icon(Icons.security),
+      //         title: Text("Código de segurança"),
+      //         onTap: () {
+      //           Navigator.pop(context);
+      //           Navigator.of(context).push(MaterialPageRoute(
+      //               builder: (context) => CodSegurancaPage()));
+      //         },
+      //       ),
+      //     ],
+      //   ),
+      // ),
       body: buildEventList(),
     );
   }

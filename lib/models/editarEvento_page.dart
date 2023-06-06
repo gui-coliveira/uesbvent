@@ -92,8 +92,6 @@ class _EditarEventoPageState extends State<EditarEventoPage> {
               margin: const EdgeInsets.only(left: 20.0, right: 20.0),
               width: 10,
               height: 200,
-              //color: Colors.white,
-              //color: Color.fromARGB(255, 227, 30, 37),
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 image: DecorationImage(

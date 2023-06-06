@@ -13,6 +13,7 @@ import 'package:uesbvent/models/membros_page.dart';
 import 'package:uesbvent/models/notificacao_page.dart';
 import 'package:uesbvent/models/presenca_page.dart';
 import '../models/evento.dart';
+import 'eventosInscritos_page.dart';
 import 'participantesEvento_page.dart';
 
 // ignore: must_be_immutable
@@ -97,6 +98,8 @@ class _OrganizadorPageState extends State<OrganizadorPage> {
               title: Text("Eventos Inscritos"),
               onTap: () {
                 Navigator.pop(context);
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => EventosInscritosPage()));
                 //Navegar para outra página
               },
             ),

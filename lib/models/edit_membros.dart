@@ -78,18 +78,18 @@ class _EditMembrosState extends State<EditMembros> {
         trailing: PopupMenuButton(
           itemBuilder: (context) {
             return [
+              // PopupMenuItem(
+              //   value: 'editar',
+              //   child: Text('Editar'),
+              // ),
               PopupMenuItem(
-                value: 'editar',
-                child: Text('Editar'),
+                value: 'promover',
+                child: Text('Promover a Organizador'),
               ),
               PopupMenuItem(
                 value: 'deletar',
                 child: Text('Deletar'),
               ),
-              PopupMenuItem(
-                value: 'promover',
-                child: Text('Promover a Organizador'),
-              )
             ];
           },
           onSelected: (String value) =>
@@ -104,18 +104,18 @@ class _EditMembrosState extends State<EditMembros> {
         trailing: PopupMenuButton(
           itemBuilder: (context) {
             return [
+              // PopupMenuItem(
+              //   value: 'editar',
+              //   child: Text('Editar'),
+              // ),
               PopupMenuItem(
-                value: 'editar',
-                child: Text('Editar'),
+                value: 'remover',
+                child: Text('Remover de Organizador'),
               ),
               PopupMenuItem(
                 value: 'deletar',
                 child: Text('Deletar'),
               ),
-              PopupMenuItem(
-                value: 'remover',
-                child: Text('Remover de Organizador'),
-              )
             ];
           },
           onSelected: (String value) =>

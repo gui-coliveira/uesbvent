@@ -69,85 +69,117 @@ class _EventoPageState extends State<EventoPage> {
         // const [Icon(Icons.filter_alt_rounded)]
       ),
       body: Center(
-        child: Container(
-          margin: const EdgeInsets.fromLTRB(15, 20, 15, 15),
-          decoration: const BoxDecoration(
-              color: Colors.redAccent,
-              borderRadius: BorderRadius.all(
-                Radius.circular(20),
-              )),
-          child: Column(
-            children: [
-              Text(
-                widget.evento.title,
-                maxLines: 2,
-                textAlign: TextAlign.justify,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Container(
-                  height: 286,
-                  width: 350,
-                  margin: const EdgeInsets.fromLTRB(0, 175, 0, 0),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20),
-                    ),
+        child: Stack(
+          children: [
+            Center(
+              child: Container(
+                margin: const EdgeInsets.fromLTRB(15, 20, 15, 15),
+                decoration: const BoxDecoration(
+                  color: Colors.redAccent,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
                   ),
-                  child: Container(
-                    padding: EdgeInsets.all(12),
-                    child: Text(
-                      widget.evento.descricao,
-                      maxLines: 20,
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      widget.evento.title,
+                      maxLines: 2,
                       textAlign: TextAlign.justify,
                       style: TextStyle(
-                        fontSize: 12,
-                        height: 1.5,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                     ),
-                  )),
-              SizedBox(
-                height: 20,
-              ),
-              OutlinedButton(
-                child: Text(
-                  isJaInscrito == false && currentUser?.displayName != null
-                      ? 'Inscrever-se'
-                      : currentUser?.displayName != null
-                          ? 'Inscrito'
-                          : 'Realizar Login',
-                  style: TextStyle(fontSize: 14),
-                ),
-                style: isJaInscrito == false && currentUser?.displayName != null
-                    ? OutlinedButton.styleFrom(
-                        backgroundColor: Colors.orange,
-                        foregroundColor: Colors.white,
-                        minimumSize: Size(120.0, 50.0),
-                      )
-                    : OutlinedButton.styleFrom(
-                        backgroundColor: Colors.grey,
-                        foregroundColor: Colors.white,
-                        minimumSize: Size(120.0, 50.0),
+                    Container(
+                        height: 200,
+                        width: 350,
+                        margin: const EdgeInsets.fromLTRB(0, 175, 0, 0),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(20),
+                            bottomRight: Radius.circular(20),
+                          ),
+                        ),
+                        child: Container(
+                          padding: EdgeInsets.all(12),
+                          child: Text(
+                            widget.evento.descricao,
+                            maxLines: 20,
+                            textAlign: TextAlign.justify,
+                            style: TextStyle(
+                              fontSize: 12,
+                              height: 1.5,
+                            ),
+                          ),
+                        )),
+                    SizedBox(
+                      height: 70,
+                    ),
+                    OutlinedButton(
+                      child: Text(
+                        isJaInscrito == false &&
+                                currentUser?.displayName != null
+                            ? 'Inscrever-se'
+                            : currentUser?.displayName != null
+                                ? 'Inscrito'
+                                : 'Realizar Login',
+                        style: TextStyle(fontSize: 14),
                       ),
-                onPressed: () {
-                  if (isJaInscrito == false &&
-                      currentUser?.displayName != null) {
-                    inscreverEvento(currentUser!.uid, widget.evento.id);
-                    setState(() {});
-                  } else if (currentUser?.displayName == null) {
-                    Navigator.of(context).pushReplacement(
-                        MaterialPageRoute(builder: (context) => LoginPage()));
-                  } else {
-                    null;
-                  }
-                },
+                      style: isJaInscrito == false &&
+                              currentUser?.displayName != null
+                          ? OutlinedButton.styleFrom(
+                              backgroundColor: Colors.orange,
+                              foregroundColor: Colors.white,
+                              minimumSize: Size(120.0, 50.0),
+                            )
+                          : OutlinedButton.styleFrom(
+                              backgroundColor: Colors.grey,
+                              foregroundColor: Colors.white,
+                              minimumSize: Size(120.0, 50.0),
+                            ),
+                      onPressed: () {
+                        if (isJaInscrito == false &&
+                            currentUser?.displayName != null) {
+                          inscreverEvento(currentUser!.uid, widget.evento.id);
+                          setState(() {});
+                        } else if (currentUser?.displayName == null) {
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => LoginPage()));
+                        } else {
+                          null;
+                        }
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ],
-          ),
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 50,
+                ),
+                Center(
+                  child: Container(
+                    width: 300,
+                    height: 150,
+                    child: Image.network(
+                      "https://static.vecteezy.com/system/resources/previews/006/692/012/original/calendar-date-date-notes-business-office-event-icon-template-black-color-editable-calendar-date-symbol-flat-illustration-for-graphic-and-web-design-free-vector.jpg",
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+              ],
+            )
+          ],
         ),
       ),
     );
