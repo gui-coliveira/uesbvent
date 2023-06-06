@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uesbvent/models/cadastroCertificado_page.dart';
 import 'criarEvento_page.dart';
+import 'evento.dart';
 import 'membros_page.dart';
 import 'notificacao_page.dart';
 import 'usuario.dart';
@@ -13,7 +14,8 @@ import 'package:uesbvent/models/recover_page.dart';
 import 'package:uesbvent/models/validarcertificado_page.dart';
 
 class ParticipantesEventoPage extends StatefulWidget {
-  const ParticipantesEventoPage({super.key});
+  final Evento evento;
+  ParticipantesEventoPage(this.evento);
 
   @override
   State<ParticipantesEventoPage> createState() =>
@@ -23,6 +25,27 @@ class ParticipantesEventoPage extends StatefulWidget {
 class _ParticipantesEventoPageState extends State<ParticipantesEventoPage> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final currentUser = FirebaseAuth.instance.currentUser;
+
+  List<Map<String, dynamic>> inscricoes = [];
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    initializeInscricoes();
+  }
+
+  void initializeInscricoes() async {
+    final inscricoesSnapshot = await FirebaseFirestore.instance
+        .collection('inscricoes')
+        .where('eventoId', isEqualTo: widget.evento.id)
+        .get();
+
+    setState(() {
+      inscricoes = inscricoesSnapshot.docs.map((doc) => doc.data()).toList();
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,117 +58,47 @@ class _ParticipantesEventoPageState extends State<ParticipantesEventoPage> {
           height: 48.0,
           child: Image.asset('assets/logo_universidade.png'),
         ),
-        actions: <Widget>[
-          TextButton(
-            child: Text('Voltar'),
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => OrganizadorPage()));
-            },
-          ),
-        ],
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            UserAccountsDrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.deepOrangeAccent,
-              ),
-              currentAccountPicture: CircleAvatar(
-                  backgroundColor: Colors.orange,
-                  child: currentUser?.displayName == null
-                      ? Icon(Icons.person)
-                      : Text('${currentUser?.displayName![0]}',
-                          style: TextStyle(
-                            fontSize: 30,
-                            color: Colors.white,
-                          ))),
-              accountName: currentUser?.displayName != null
-                  ? Text(currentUser?.displayName as String)
-                  : Text(
-                      'Visitante',
-                      style: TextStyle(fontSize: 18),
-                    ),
-              accountEmail: currentUser?.email != null
-                  ? Text(currentUser?.email as String)
-                  : Text(''),
-            ),
-            ListTile(
-              leading: Icon(Icons.person),
-              title: Text("Meu perfil"),
-              onTap: () {
-                Navigator.pop(context);
-                //Navegar para outra página
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.event_rounded),
-              title: Text("Eventos Inscritos"),
-              onTap: () {
-                Navigator.pop(context);
-                //Navegar para outra página
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.create_new_folder_rounded),
-              title: Text("Criar Evento"),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => CriarEvento_Page()));
-                //Navegar para outra página
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.notifications_on_rounded),
-              title: Text("Enviar Notificação"),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => NotificacaoPage()));
-                //Navegar para outra página
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.person_search_rounded),
-              title: Text("Lista de Membros"),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => MembrosPage()));
-              },
-            ),
-          ],
-        ),
-      ),
-      body: FutureBuilder<List<Usuario>>(
-        future: readUsuarios().first,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            final usuarios = snapshot.data!;
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              itemCount: inscricoes.length,
+              itemBuilder: (context, index) {
+                final inscricao = inscricoes[index];
+                final usuarioId = inscricao['usuarioId'].toString();
+                final presente = inscricao['presente'].toString();
 
-            return ListView(
-              children: usuarios.map(buildUsuario).toList(),
-            );
-          } else {
-            return Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
+                return FutureBuilder<Usuario>(
+                  future: readUsuario(usuarioId),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Container(); // Exibe um espaço em branco enquanto aguarda o carregamento do usuário
+                    }
+                    if (snapshot.hasData) {
+                      final usuario = snapshot.data!;
+                      return buildUsuario(usuario);
+                    } else {
+                      return Container(); // Exibe um espaço em branco caso não seja possível carregar o usuário
+                    }
+                  },
+                );
+              },
+            ),
     );
   }
 
-  Stream<List<Usuario>> readUsuarios() => FirebaseFirestore.instance
-      .collection('usuarios')
-      .where('org', isEqualTo: 'n')
-      .snapshots()
-      .map((snapshot) =>
-          snapshot.docs.map((doc) => Usuario.fromJson(doc.data())).toList());
+  Future<Usuario> readUsuario(String userId) async {
+    final snapshot = await FirebaseFirestore.instance
+        .collection('usuarios')
+        .doc(userId)
+        .get();
+    final data = snapshot.data();
+    if (data != null) {
+      return Usuario.fromJson(data);
+    } else {
+      throw Exception('Failed to load usuario');
+    }
+  }
 
   Widget buildUsuario(Usuario usuario) => ListTile(
         leading: CircleAvatar(child: Text('${usuario.nome[0]}')),

@@ -40,18 +40,6 @@ class _CadastroCertificadoPageState extends State<CadastroCertificadoPage> {
           height: 48.0,
           child: Image.asset('assets/logo_universidade.png'),
         ),
-        actions: <Widget>[
-          TextButton(
-            child: Text('Voltar'),
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => ParticipantesEventoPage()));
-            },
-          ),
-        ],
       ),
       drawer: Drawer(
         child: ListView(

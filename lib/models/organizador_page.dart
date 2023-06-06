@@ -234,8 +234,8 @@ class _OrganizadorPageState extends State<OrganizadorPage> {
       //---------------------
       //---------------------
     } else if (value == 'cadastrarcertificados') {
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => ParticipantesEventoPage()));
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => ParticipantesEventoPage(evento)));
       //---------------------
       //---------------------
     } else if (value == 'editar') {
