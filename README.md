@@ -1,6 +1,6 @@
 # uesbvent
 
-A new Flutter project.
+Flutter project for Software Engineering course
 
 ## Getting Started
 
